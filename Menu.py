@@ -23,6 +23,18 @@ class Menu(IScene):
         メニュー画面のメニューを担当するクラス
         '''
         def __init__(self, text, x, y, scene):
+            '''
+            Parameter
+            ---------
+            text : string
+                メニューに表示する文字列
+            x : int
+                文字列の左上のx座標
+            y : int
+                文字列の左上のy座標
+            scene : string
+                押した時に切り替えるシーン
+            '''
             self.textSurf = GameSettings.MenuFont.render(text, True, (0, 0, 0))
             self.text = text
             self.size = (self.textSurf.get_width(), self.textSurf.get_height())
@@ -30,6 +42,9 @@ class Menu(IScene):
             self.scene = scene
 
         def update(self):
+            '''
+            メニューがマウスオーバーされた時の動作
+            '''
             if Menu.isMouseOver(self.pos[0], self.pos[1], self.size[0], self.size[1]):
                 self.textSurf = GameSettings.MenuFont.render(self.text, True, (200, 37, 50))
                 for event in pygame.event.get():
@@ -49,6 +64,9 @@ class Menu(IScene):
             self.MenuList.append(self.Menus(self.MenuText[i][0], 100, 300 + 80 * i, self.MenuText[i][1]))
 
     def isMouseOver(x, y, width, height):
+        '''
+        マウスオーバーしているかを返します
+        '''
         mousepos = pygame.mouse.get_pos()
         if x <= mousepos[0] <= x + width and y <= mousepos[1] <= y + height:
             return True
