@@ -5,14 +5,10 @@ import GameSettings
 import SceneManager
 import IScene
 
-def shutdown():
-    print('Bye')
-
 def main():
     pygame.init()
     screen = pygame.display.set_mode(GameSettings.WindowSize)
     pygame.display.set_caption(GameSettings.GameTitle)
-    pygame.register_quit(shutdown)
     pygame.key.set_repeat(1)
     clock = pygame.time.Clock()
     IScene.IScene.setScreen(screen)

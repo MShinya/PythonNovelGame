@@ -7,9 +7,21 @@ BeforeScene = SceneList['Menu']
 CurrentScene = SceneList['Menu']   
 
 def getScene():
+    '''
+    現在いるシーンのインスタンスを返します。
+    '''
     return CurrentScene
 
+def getBeforeScene():
+    '''
+    一つ前のシーンのインスタンスを返します。
+    '''
+    return BeforeScene
+
 def setScene(scene):
+    '''
+    シーン名を受け取り、現在のシーンを切り替えます。
+    '''
     global BeforeScene
     global CurrentScene
     global SceneList
