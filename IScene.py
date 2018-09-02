@@ -39,6 +39,16 @@ class IScene():
             切り替えたいシーン名
         '''
         SceneManager.setScene(scene)
+        
+    def isMouseOver(x, y, width, height):
+        '''
+        マウスオーバーしているかを返します
+        '''
+        mousepos = pygame.mouse.get_pos()
+        if x <= mousepos[0] <= x + width and y <= mousepos[1] <= y + height:
+            return True
+        else:
+            return False
 
     @classmethod
     def setScreen(cls, screen):

@@ -70,16 +70,6 @@ class Menu(IScene):
         for i in range(len(self.MenuText)):
             self.MenuList.append(self.Menus(self.MenuText[i][0], 100, 300 + 80 * i, self.MenuText[i][1]))
 
-    def isMouseOver(x, y, width, height):
-        '''
-        マウスオーバーしているかを返します
-        '''
-        mousepos = pygame.mouse.get_pos()
-        if x <= mousepos[0] <= x + width and y <= mousepos[1] <= y + height:
-            return True
-        else:
-            return False
-
     def drawTitle(self):
         '''
         ゲームのタイトルを作成、描画する関数
