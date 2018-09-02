@@ -65,7 +65,7 @@ class Menu(IScene):
 
 
     def __init__(self):
-        self.DrawList.append(pygame.image.load('images/sougen.jpg'))
+        self.DrawList.append(pygame.image.load('images/background/sougen.jpg'))
         self.MenuList = []
         for i in range(len(self.MenuText)):
             self.MenuList.append(self.Menus(self.MenuText[i][0], 100, 300 + 80 * i, self.MenuText[i][1]))

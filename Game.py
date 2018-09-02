@@ -6,4 +6,6 @@ class Game(IScene):
     '''
     メニュー画面を担当するクラス
     '''
-    pass
+    BackGroundImage = 'images/background/universe.jpg'
+
+    
