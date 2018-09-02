@@ -7,7 +7,7 @@ class Exit(IScene):
     '''
     メニュー画面を担当するクラス
     '''
-    def update():
+    def update(self):
         pygame.quit()
         sys.exit()
 
