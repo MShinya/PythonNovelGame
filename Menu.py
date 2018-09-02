@@ -36,6 +36,8 @@ class Menu(IScene):
                 押した時に切り替えるシーン
             '''
             self.textSurf = GameSettings.MenuFont.render(text, True, (0, 0, 0))
+            self.mouseOverTextSurf = GameSettings.MenuFont.render(text, True, (200, 37, 50))
+            self.mouseOverFlag = False
             self.text = text
             self.size = (self.textSurf.get_width(), self.textSurf.get_height())
             self.pos = (x, y)
@@ -46,15 +48,20 @@ class Menu(IScene):
             メニューがマウスオーバーされた時の動作
             '''
             if Menu.isMouseOver(self.pos[0], self.pos[1], self.size[0], self.size[1]):
-                self.textSurf = GameSettings.MenuFont.render(self.text, True, (200, 37, 50))
-                for event in pygame.event.get():
-                    if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                self.mouseOverFlag = True
+               # for event in pygame.event.get():
+               #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                pygame.event.get()
+                if pygame.mouse.get_pressed()[0]:
                         Menu.cheangeScene(self.scene)
             else:
-                self.textSurf = GameSettings.MenuFont.render(self.text, True, (0, 0, 0))
+                self.mouseOverFlag = False
 
         def draw(self):
-            Menu.screen.blit(self.textSurf, self.pos)
+            if self.mouseOverFlag:
+                Menu.screen.blit(self.mouseOverTextSurf, self.pos)
+            else:
+                Menu.screen.blit(self.textSurf, self.pos)
 
 
     def __init__(self):

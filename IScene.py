@@ -21,22 +21,13 @@ class IScene():
         '''
         毎フレーム呼ばれ、シーンの更新を行う
         '''
-        print(self.__class__.__name__ + '\'s update() has been called.')
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_m:
-                    self.chengeScene('Menu')
-                if event.key == K_g:
-                    self.chengeScene('Game')
+        pass
 
     def draw(self):
         '''
         毎フレーム呼ばれ、シーンの描画を行う
         '''
-        print(self.__class__.__name__ + '\'s draw() has been called.')
+        pass
 
     def cheangeScene(scene):
         '''

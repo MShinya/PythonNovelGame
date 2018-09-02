@@ -1,7 +1,7 @@
 import pygame
 pygame.font.init()
 
-FrameRate = 60
+FrameRate = 30
 GameTitle = 'NovelGame'
 WindowSize = (1280, 720)
 
