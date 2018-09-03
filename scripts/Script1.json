@@ -1,0 +1,55 @@
+{
+    "001":{
+        "background_img":"images/background/kaidou.jpg",
+        "BGM":"sounds/BGM/BGM_01.mp3",
+        "charactor_img":{
+            "l_charactor":{"img":"images/charactor/girl_1/hohoemi.png", "pos":"default"},
+            "m_charactor":null,
+            "r_charactor":null
+        },
+        "charactor_effect":{
+            "l_effect":"fade_in",
+            "m_effect":null,
+            "r_effect":null
+        },
+        "name":"Girl_1",
+        "lines":[
+            "今日もいい天気だなぁ"
+        ]
+    },
+    "002":{
+        "charactor_effect":{
+            "l_effect":null
+        },
+        "lines":[
+            "こんなに天気がいい日はどこかにでかけましょうかね"
+        ],
+        "question":[
+                {"alternative_text":"公園", "jump":"park"},
+                {"alternative_text":"デパート", "jump":"department"},
+                {"alternative_text":"遊園地", "jump":"amusement_park"}
+        ],
+        "scene_change_effect":"black_out"
+    },
+    "park_001":{
+        "background_img":"images/background/park.jpg",
+        "BGM":"sounds/BGM/BGM_02.mp3",
+        "charactor_effect":{
+            "l_effect":"fade_in"
+        }
+    },
+    "department_001":{
+        "background_img":"images/background/department.jpg",
+        "BGM":"sounds/BGM/BGM_03.mp3",
+        "charactor_effect":{
+            "l_effect":"fade_in"
+        }
+    },
+    "amusement_park001":{
+        "background_img":"images/background/amusement_park.jpeg",
+        "BGM":"sounds/BGM/BGM_04.mp3",
+        "charactor_effect":{
+            "l_effect":"fade_in"
+        }
+    }
+}
