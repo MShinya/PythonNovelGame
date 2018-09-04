@@ -43,14 +43,12 @@ class Menu(IScene):
             self.pos = (x, y)
             self.scene = scene
 
-        def update(self):
+        def eventProcess(self):
             '''
             メニューがマウスオーバーされた時の動作
             '''
             if Menu.isMouseOver(self.pos[0], self.pos[1], self.size[0], self.size[1]):
                 self.mouseOverFlag = True
-               # for event in pygame.event.get():
-               #     if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 pygame.event.get()
                 if pygame.mouse.get_pressed()[0]:
                         Menu.cheangeScene(self.scene)
@@ -77,13 +75,12 @@ class Menu(IScene):
         title = GameSettings.TitleFont.render('ノベルゲームだよ', True, (0, 0, 0))
         self.screen.blit(title, (GameSettings.WindowSize[0] // 2 - title.get_width() // 2, 50))
 
-    def update(self):
-        for M in self.MenuList:
-            M.update()
-
     def draw(self):
         for img in self.DrawList:
             self.screen.blit(img, (0, 0))
         self.drawTitle()
         for M in self.MenuList:
             M.draw()
+    def eventProcess(self):
+        for M in self.MenuList:
+            M.eventProcess()

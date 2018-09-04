@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-class Charactors():
+class MessageWindow():
     @classmethod
     def update(cls, chapter):
         pass

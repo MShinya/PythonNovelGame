@@ -23,6 +23,8 @@ def main():
 
         SceneManager.getScene().draw()
 
+        SceneManager.getScene().eventProcess()
+
         pygame.display.update()
 
         for event in pygame.event.get():

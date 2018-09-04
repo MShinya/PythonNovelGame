@@ -28,6 +28,11 @@ class IScene():
         毎フレーム呼ばれ、シーンの描画を行う
         '''
         pass
+    def eventProcess(self):
+        '''
+        毎フレーム呼ばれ、シーンのイベント処理を行う
+        '''
+        pass
 
     def cheangeScene(scene):
         '''
