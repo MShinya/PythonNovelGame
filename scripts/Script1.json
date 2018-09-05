@@ -2,29 +2,38 @@
     "001":{
         "background_img":"images/background/kaidou.jpg",
         "BGM":"sounds/BGM/mokuba.mp3",
-        "charactor_img":{
-            "l_charactor":{"img":"images/charactor/girl_1/hohoemi.png", "pos":"default"},
-            "m_charactor":null,
-            "r_charactor":null
+        "charactor":{
+            "charactor_img":{
+                "l_charactor":"images/charactor/girl_1/hohoemi2.png",
+                "m_charactor":null,
+                "r_charactor":null
+            },
+            "charactor_effect":{
+                "l_effect":"fade_in",
+                "m_effect":null,
+                "r_effect":null
+            }
         },
-        "charactor_effect":{
-            "l_effect":"fade_in",
-            "m_effect":null,
-            "r_effect":null
-        },
-        "name":"Girl_1",
-        "lines":[
-            "今日もいい天気だなぁ"
-        ]
+        "message_window":{
+            "name":"Girl_1",
+            "lines":[
+                "今日もいい天気だなぁ"
+            ]
+        }
     },
     "002":{
         "background_img":"images/background/universe.jpg",
-        "charactor_effect":{
-            "l_effect":null
+        "charactor":{
+            "charactor_effect":{
+                "l_effect":null
+            }
         },
-        "lines":[
-            "こんなに天気がいい日はどこかにでかけましょうかね"
-        ],
+        "message_window":{
+            "name":null,
+            "lines":[
+                "こんなに天気がいい日はどこかにでかけましょうかね"
+            ]
+        },
         "question":[
                 {"alternative_text":"公園", "jump":"park"},
                 {"alternative_text":"デパート", "jump":"department"},

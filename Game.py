@@ -9,13 +9,15 @@ class Game(IScene):
     '''
     メニュー画面を担当するクラス
     '''
-    def __init__(self, scriptName = 'Script1.json', scriptStartLineNumber = 1):
+    def __init__(self, scriptName = 'Script1.json', scriptStartLineNumber = 1, chapterName = ''):
         with open('scripts/' + scriptName, 'r') as jsonScript:
             self.dictScript = json.load(jsonScript)
         self.scriptName = scriptName
-        self.chapterName = ""
+        self.chapterName = chapterName
         self.scriptStartLineNumber = scriptStartLineNumber
         self.chapterNumber = self.chapterName + str(scriptStartLineNumber).zfill(3)
+        self.Charactors = Charactors(self.dictScript[self.chapterNumber]['charactor'])
+        #self.MessageWindow = MessageWindow(self.dictScript[self.chapterNumber]['message_window'])
 
     def update(self):
         self.chapter = self.dictScript[self.chapterNumber]
@@ -23,12 +25,14 @@ class Game(IScene):
             self.background_img = pygame.image.load(self.chapter["background_img"])
         if "BGM" in self.chapter:
             self.BGM = pygame.mixer.music.load(self.chapter["BGM"])
-        self.charactor_img = Charactors.update(self.chapter)
-        self.messageWindow = MessageWindow.update(self.chapter)
+        self.Charactors.update()
+        #MessageWindow.update()
         Game.eventCheck()
 
     def draw(self):
         self.screen.blit(self.background_img, (0, 0))
+        self.Charactors.draw(self.screen)
+        #self.MessageWindow.draw(self.screen)
 
     def eventProcess(self):
         pass
