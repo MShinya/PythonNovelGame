@@ -17,13 +17,18 @@
         "message_window":{
             "name":"Girl_1",
             "lines":[
-                "今日もいい天気だなぁ"
+                "むかしむかしあるとことに、おじいさんとおばあさんが暮らしていました。おじいさんは山へ芝刈りに、おばあさんは川へ洗濯に行きました。",
+                "おばあさんが洗濯をしていると、川上から大きなももがどんぶらこと流れてきました。"
             ]
         }
     },
     "002":{
-        "background_img":"images/background/universe.jpg",
+        "background_img":"images/background/sougen.jpg",
         "charactor":{
+            "charactor_img":{
+                "l_charactor":null,
+                "r_charactor":"images/charactor/girl_1/hohoemi2.png"
+            },
             "charactor_effect":{
                 "l_effect":null
             }

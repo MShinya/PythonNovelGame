@@ -7,7 +7,10 @@ class Charactors():
         self.dictCharactor = charactor
         self.charactor_img = [None for _ in range(3)]
         self.charactor_pos = [None for _ in range(3)]
-        self.charactor_alpha = [100 for _ in range(3)]
+        self.charactor_alpha = [255 for _ in range(3)]
+
+    def setChapter(self, chapter):
+        self.dictCharactor = chapter
 
     def charactorImgLoad(self):
         if 'l_charactor' in self.dictCharactor['charactor_img']:
