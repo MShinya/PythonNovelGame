@@ -17,16 +17,31 @@ class Game(IScene):
         self.chapterName = chapterName
         self.scriptLineNumber = scriptStartLineNumber
         self.chapterNumber = self.chapterName + str(scriptStartLineNumber).zfill(3)
+        self.chapter = self.dictScript[self.chapterNumber]
         self.Charactors = Charactors(self.dictScript[self.chapterNumber]['charactor'])
         self.nextChapterFrag = True
         self.MessageWindow = MessageWindow(self.dictScript[self.chapterNumber]['message_window'])
+        self.callChapterOnceFlag = True
 
-    def update(self):
-        self.chapter = self.dictScript[self.chapterNumber]
+    def callChapterOnce(self):
+        self.callChapterOnceFlag = False
         if "background_img" in self.chapter:
             self.background_img = pygame.image.load(self.chapter["background_img"])
         if "BGM" in self.chapter:
             self.BGM = pygame.mixer.music.load(self.chapter["BGM"])
+
+    def setChapter(self):
+        self.scriptLineNumber += 1
+        self.chapterNumber = self.chapterName + str(self.scriptLineNumber).zfill(3)
+        self.Charactors.setChapter(self.dictScript[self.chapterNumber]['charactor'])
+        self.MessageWindow.setChapter(self.dictScript[self.chapterNumber]['message_window'])
+        self.nextChapterFrag = False
+        self.chapter = self.dictScript[self.chapterNumber]
+        self.callChapterOnceFlag = True
+
+    def update(self):
+        if self.callChapterOnceFlag:
+            self.callChapterOnce()
         self.Charactors.update()
         self.MessageWindow.update()
         Game.eventCheck()
@@ -44,11 +59,7 @@ class Game(IScene):
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
                     if self.nextChapterFrag:
-                        self.scriptLineNumber += 1
-                        self.chapterNumber = self.chapterName + str(self.scriptLineNumber).zfill(3)
-                        self.Charactors.setChapter(self.dictScript[self.chapterNumber]['charactor'])
-                        self.MessageWindow.setChapter(self.dictScript[self.chapterNumber]['message_window'])
-                        self.nextChapterFrag = False
+                        self.setChapter()
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 if self.nextChapterFrag:
                     self.scriptLineNumber += 1
