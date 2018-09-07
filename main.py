@@ -4,7 +4,6 @@ from pygame.locals import *
 import GameSettings
 import SceneManager
 import IScene
-import time
 
 def main():
     pygame.init()
@@ -15,7 +14,6 @@ def main():
     IScene.IScene.setScreen(screen)
     
     while True:
-        start = time.time()
         '''
         メインループ
         '''
@@ -35,6 +33,7 @@ def main():
                 sys.exit()
         clock.tick(GameSettings.FrameRate)
 
-        print(time.time() - start)
+        print(pygame.display.get_wm_info())
+
 if __name__ == '__main__':
     main()

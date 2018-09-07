@@ -37,8 +37,11 @@ class MessageWindow():
     def drawLines(self, screen):
         for i in range(self.flameNumber // 14 + 1):
             if i < len(self.lineImages) - 1:
-                screen.blit(self.lineImages[i][min((self.flameNumber - 13 * i) * 2, len(self.dictMessageWindow['lines'][i])) - 1], \
-                            (self.textBoxPos[0] + 20, self.textBoxPos[1] + 50 + 25 * i))
+                try:
+                    screen.blit(self.lineImages[i][min((self.flameNumber - 13 * i) * 2, len(self.dictMessageWindow['lines'][i])) - 1], \
+                                (self.textBoxPos[0] + 20, self.textBoxPos[1] + 50 + 25 * i))
+                except:
+                    pass
 
     def callOnce(self):
         self.textBox = pygame.image.load('images/frame/textbox2.png').convert()
@@ -51,6 +54,9 @@ class MessageWindow():
     def callChapterOnce(self):
         self.prepareLines()
         self.makeLineImage()
+        if self.dictMessageWindow['name'] == 'MainCharactorName':
+            self.dictMessageWindow['name'] = GameSettings.MainCharactorName
+        self.textName = GameSettings.LinesFont.render(self.dictMessageWindow['name'], True, (255, 255, 255))
         self.callChapterOnceFlag = False
 
     def update(self):
@@ -59,9 +65,8 @@ class MessageWindow():
             self.callOnce()
         if self.callChapterOnceFlag:
             self.callChapterOnce()
-        if self.dictMessageWindow['name'] == 'MainCharactorName':
-            self.dictMessageWindow['name'] = GameSettings.MainCharactorName
 
     def draw(self, screen):
         screen.blit(self.textBox, self.textBoxPos)
+        screen.blit(self.textName, (self.textBoxPos[0] + (196 - self.textName.get_size()[0]) // 2, self.textBoxPos[1] + 6))
         self.drawLines(screen)
