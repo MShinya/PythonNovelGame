@@ -33,7 +33,7 @@ def main():
                 sys.exit()
         clock.tick(GameSettings.FrameRate)
 
-        print(pygame.display.get_wm_info())
+        #print(pygame.display.get_wm_info())
 
 if __name__ == '__main__':
     main()
