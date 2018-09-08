@@ -52,6 +52,8 @@ class Game(IScene):
         self.MessageWindow.draw(self.screen)
 
     def eventProcess(self):
+        if 290 <= pygame.mouse.get_pos()[0] <= 990 and 690 <= pygame.mouse.get_pos()[1] <= 720:
+            Game.cheangeScene('GameUnderMenu')
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()

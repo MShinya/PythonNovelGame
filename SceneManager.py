@@ -1,8 +1,9 @@
 import Menu
 import Game
 import Exit
+import GameUnderMenu
 
-SceneList = {'Menu': Menu.Menu(), 'Game': Game.Game(), 'Exit': Exit.Exit()}
+SceneList = {'Menu': Menu.Menu(), 'Game': Game.Game(), 'GameUnderMenu': GameUnderMenu.GameUnderMenu(), 'Exit': Exit.Exit()}
 BeforeScene = SceneList['Menu']
 CurrentScene = SceneList['Menu']   
 
