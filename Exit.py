@@ -1,10 +1,12 @@
 import sys
 import pygame
-from pygame.locals import *
-from IScene import *
+# from pygame.locals import *
+import IScene
 import GameSettings
+import SceneManager
 
-class Exit(IScene):
+
+class Exit(IScene.IScene):
     '''
     メニュー画面を担当するクラス
     '''
@@ -19,14 +21,14 @@ class Exit(IScene):
                                  GameSettings.AlternativeFont.render('いいえ', True, (0, 0, 0))]
         self.mouseOverAlternativeTexts = [GameSettings.AlternativeFont.render('はい', True, (255, 0, 0)),
                                           GameSettings.AlternativeFont.render('いいえ', True, (255, 0, 0))]
-        self.alternativePos = [(self.flamePos[0] + (self.flameImage.get_size()[0] // 2 - self.alternativeTexts[0].get_size()[0]) // 2,\
+        self.alternativePos = [(self.flamePos[0] + (self.flameImage.get_size()[0] // 2 - self.alternativeTexts[0].get_size()[0]) // 2,
                                 self.flamePos[1] + self.flameImage.get_size()[1] - 80),
-                               (self.flamePos[0] + self.flameImage.get_size()[0] * 3 // 4 - self.alternativeTexts[1].get_size()[1] // 2 - 40,\
+                               (self.flamePos[0] + self.flameImage.get_size()[0] * 3 // 4 - self.alternativeTexts[1].get_size()[1] // 2 - 40,
                                 self.flamePos[1] + self.flameImage.get_size()[1] - 80)]
         self.alternativeMouseOverFlag = [False, False]
 
     def update(self):
-        #選択肢にマウスオーバーしているかを調べ処理します。
+        # 選択肢にマウスオーバーしているかを調べ処理します。
         for i in range(len(self.alternativeTexts)):
             x = self.alternativePos[i][0]
             y = self.alternativePos[i][1]
@@ -53,9 +55,3 @@ class Exit(IScene):
                 self.screen.blit(self.mouseOverAlternativeTexts[i], self.alternativePos[i])
             else:
                 self.screen.blit(self.alternativeTexts[i], self.alternativePos[i])
-
-
-                        
-
-
-

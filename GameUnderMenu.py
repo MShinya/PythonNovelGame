@@ -1,22 +1,24 @@
 import pygame
-from pygame.locals import *
-from IScene import *
+import IScene
 import GameSettings
+import SceneManager
 
-class GameUnderMenu(IScene):
+
+class GameUnderMenu(IScene.IScene):
     flameNum = 0
+
     def __init__(self):
         self.MenuList = [
-                ('Q-SAVE', 'Exit'),
-                ('Q-LOAD', 'Exit'),
-                ('SAVE', 'Exit'),
-                ('LOAD', 'Exit'),
-                ('SKIP', 'Exit'),
-                ('AUTO', 'Exit'),
-                ('LOG', 'Exit'),
-                ('BACK', 'Exit'),
-                ('CONFIG', 'Exit')
-                ]
+            ('Q-SAVE', 'Exit'),
+            ('Q-LOAD', 'Exit'),
+            ('SAVE', 'Save'),
+            ('LOAD', 'Exit'),
+            ('SKIP', 'Exit'),
+            ('AUTO', 'Exit'),
+            ('LOG', 'Exit'),
+            ('BACK', 'Exit'),
+            ('CONFIG', 'Exit')
+        ]
         self.drawList = []
         for i in range(len(self.MenuList)):
             if i == 0:
@@ -33,7 +35,7 @@ class GameUnderMenu(IScene):
     def eventProcess(self):
         for D in self.drawList:
             D.eventProcess()
-        
+
     class Menus():
         '''
         メニュー画面のメニューを担当するクラス
@@ -74,7 +76,7 @@ class GameUnderMenu(IScene):
                 self.mouseOverFlag = False
 
         def draw(self):
-            self.pos[1] = 690 -  min(int(GameUnderMenu.flameNum / 100), self.size[1])
+            self.pos[1] = 690 - min(int(GameUnderMenu.flameNum / 100), self.size[1])
             if self.mouseOverFlag:
                 GameUnderMenu.screen.blit(self.mouseOverTextSurf, self.pos)
             else:

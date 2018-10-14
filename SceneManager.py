@@ -1,10 +1,11 @@
 import Menu
 import Game
 import Exit
+import Save
 import GameUnderMenu
 
 #SceneList から 'Game': Game.Game() を削除してある
-SceneList = {'Menu': Menu.Menu(), 'GameUnderMenu': GameUnderMenu.GameUnderMenu(), 'Exit': Exit.Exit()}
+SceneList = {'Menu': Menu.Menu(), 'GameUnderMenu': GameUnderMenu.GameUnderMenu(), 'Exit': Exit.Exit(), 'Save': Save.Save()}
 BeforeScene = SceneList['Menu']
 CurrentScene = SceneList['Menu']   
 

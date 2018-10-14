@@ -122,7 +122,6 @@ class Game(IScene.IScene):
             self.callChapterOnce()
         self.Charactors.update()
         self.MessageWindow.update()
-        Game.eventCheck()
 
     def draw(self):
         self.screen.blit(self.background_img, (0, 0))
@@ -153,12 +152,8 @@ class Game(IScene.IScene):
             if event.type == pygame.locals.MOUSEBUTTONUP:
                 self.nextChapterFrag = True
 
-    @classmethod
-    def eventCheck(cls):
-        pass
-
-    def Save(self):
-        pass
+    def Save():
+        print('Game.Save() has been called')
 
     def Load(self):
         pass
