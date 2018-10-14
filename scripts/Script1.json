@@ -1,71 +1,86 @@
 {
-    "001":{
-        "background_img":"images/background/kaidou.jpg",
-        "BGM":"sounds/BGM/mokuba.mp3",
-        "charactor":{
-            "charactor_img":{
-                "l_charactor":"images/charactor/girl_1/hohoemi2.png",
-                "m_charactor":null,
-                "r_charactor":null
+    "introduction":{
+        "introduction001":{
+            "background_img":"images/background/kaidou.jpg",
+            "BGM":"sounds/BGM/mokuba.mp3",
+            "charactor":{
+                "charactor_img":{
+                    "l_charactor":"images/charactor/girl_1/hohoemi2.png",
+                    "m_charactor":null,
+                    "r_charactor":null
+                },
+                "charactor_effect":{
+                    "l_effect":"fade_in",
+                    "m_effect":null,
+                    "r_effect":null
+                }
             },
-            "charactor_effect":{
-                "l_effect":"fade_in",
-                "m_effect":null,
-                "r_effect":null
+            "message_window":{
+                "name":"Girl_1",
+                "lines":[
+                    "むかしむかしあるとことに、おじいさんとおばあさんが暮らしていました。おじいさんは山へ芝刈りに、おばあさんは川へ洗濯に行きました。",
+                    "おばあさんが洗濯をしていると、川上から大きなももがどんぶらこと流れてきました。"
+                ]
             }
         },
-        "message_window":{
-            "name":"Girl_1",
-            "lines":[
-                "むかしむかしあるとことに、おじいさんとおばあさんが暮らしていました。おじいさんは山へ芝刈りに、おばあさんは川へ洗濯に行きました。",
-                "おばあさんが洗濯をしていると、川上から大きなももがどんぶらこと流れてきました。"
-            ]
-        }
-    },
-    "002":{
-        "background_img":"images/background/sougen.jpg",
-        "charactor":{
-            "charactor_img":{
-                "l_charactor":null,
-                "r_charactor":"images/charactor/girl_1/hohoemi2.png"
+
+        "introduction002":{
+            "background_img":"images/background/sougen.jpg",
+            "charactor":{
+                "charactor_img":{
+                    "l_charactor":null,
+                    "r_charactor":"images/charactor/girl_1/hohoemi2.png"
+                },
+                "charactor_effect":{
+                    "l_effect":null
+                }
             },
+            "message_window":{
+                "name":"Girl_1",
+                "lines":[
+                    "「まあ，なんて大きな桃なのかしら！」",
+                    "そういうとおばあさんは桃を家に持って帰りました．"
+                ]
+            },
+            "question":[
+                    {"alternative_text":"公園", "jump":"park"},
+                    {"alternative_text":"デパート", "jump":"department"},
+                    {"alternative_text":"遊園地", "jump":"amusement_park"}
+            ],
+            "scene_change_effect":"black_out"
+        }
+    },
+
+
+    "park":{
+        "park001":{
+            "background_img":"images/background/park.jpg",
+            "BGM":"sounds/BGM/BGM_02.mp3",
             "charactor_effect":{
-                "l_effect":null
+                "l_effect":"fade_in"
             }
-        },
-        "message_window":{
-            "name":"Girl_1",
-            "lines":[
-                "「まあ，なんて大きな桃なのかしら！」",
-                "そういうとおばあさんは桃を家に持って帰りました．"
-            ]
-        },
-        "question":[
-                {"alternative_text":"公園", "jump":"park"},
-                {"alternative_text":"デパート", "jump":"department"},
-                {"alternative_text":"遊園地", "jump":"amusement_park"}
-        ],
-        "scene_change_effect":"black_out"
-    },
-    "park001":{
-        "background_img":"images/background/park.jpg",
-        "BGM":"sounds/BGM/BGM_02.mp3",
-        "charactor_effect":{
-            "l_effect":"fade_in"
         }
     },
-    "department001":{
-        "background_img":"images/background/department.jpg",
-        "BGM":"sounds/BGM/BGM_03.mp3",
-        "charactor_effect":{
-            "l_effect":"fade_in"
+
+
+    "department":{
+        "department001":{
+            "background_img":"images/background/department.jpg",
+            "BGM":"sounds/BGM/BGM_03.mp3",
+            "charactor_effect":{
+                "l_effect":"fade_in"
+            }
         }
     },
-    "amusement_park001":{
-        "background_img":"images/background/amusement_park.jpeg",
-        "BGM":"sounds/BGM/BGM_04.mp3",
-        "charactor_effect":{
-            "l_effect":"fade_in"
+
+
+    "amusement_park":{
+        "amusement_park001":{
+            "background_img":"images/background/amusement_park.jpeg",
+            "BGM":"sounds/BGM/BGM_04.mp3",
+            "charactor_effect":{
+                "l_effect":"fade_in"
+            }
         }
     }
 }

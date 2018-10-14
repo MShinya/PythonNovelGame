@@ -1,9 +1,9 @@
 import sys
 import pygame
-from pygame.locals import *
 import GameSettings
 import SceneManager
 import IScene
+
 
 def main():
     pygame.init()
@@ -12,7 +12,7 @@ def main():
     pygame.key.set_repeat(1)
     clock = pygame.time.Clock()
     IScene.IScene.setScreen(screen)
-    
+
     while True:
         '''
         メインループ
@@ -28,12 +28,11 @@ def main():
         pygame.display.update()
 
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.locals.QUIT:
                 pygame.quit()
                 sys.exit()
         clock.tick(GameSettings.FrameRate)
 
-        #print(pygame.display.get_wm_info())
 
 if __name__ == '__main__':
     main()

@@ -1,42 +1,120 @@
 import json
 import sys
 import pygame
-from pygame.locals import *
-from IScene import *
+import IScene
 from Charactors import Charactors
 from MessageWindow import MessageWindow
 
-class Game(IScene):
+
+class Game(IScene.IScene):
     '''
-    メニュー画面を担当するクラス
+    ゲーム本体を担当するクラス．行う仕事は
+        1) スクリプトファイルの内容の解析
+        2) 解析した内容に基づき，ゲーム画面の構築，音声の再生
+        3) セーブ(ロードは暗号化のために別クラスにする)
+
+    ゲームを最初から始めた時はコンストラクタのデフォルト引数を使って初期化し，
+    ロードした時はLoadクラスによって初期化される．
+
+    Menber Functions
+    ----------------
+    __init__ : Gameクラスを初期化するコンストラクタ．
+
+    callChapterOnce : チャプターが一つ進むごとに一回だけ呼ばれる処理を書く．bgm，背景など
+
+    setChapter : Gameクラスがもつチャプターの情報の更新を行う．
+
+    update : 毎フレーム呼ばれ．ゲームの構成要素の更新を行う．
+
+    draw : 毎フレーム呼ばれ．描画処理を行う．
+
+    eventProcess : 毎フレーム呼ばれ，キー入力やマウス入力に応じた処理を行う．
     '''
-    def __init__(self, scriptName = 'Script1.json', scriptStartLineNumber = 1, chapterName = ''):
+    def __init__(self, scriptName: str = 'Script1.json', scriptStartChapterNumber: int = 1, sectionName: str = 'introduction') -> None:
+        '''
+        ゲームの初期化を行う関数．
+        ゲームが最初から始められた時は，デフォルト引数に基づいて初期化する．
+        ロードされた時は，Loadクラスから渡された引数に基づき初期化する．
+
+        Parameters
+        ----------
+        scriptName : String, default = 'Script1.json'
+            スクリプトが書かれたjsonファイルを指定する．
+
+        scriptStartLineNumber : int, default = 1
+            スクリプトのどこから開始するかを指定する．デフォルトはチャプター１から．
+
+        chapterName : String, default = ''
+            チャプターの名前．
+        '''
         with open('scripts/' + scriptName, 'r') as jsonScript:
+            '''
+            スクリプトファイルを読み込み，ディクショナリーとして保存する．
+            現在は一つのスクリプトファイルにしか対応していないが，複数のスクリプトファイルに対応する必要がある(18/10/14)
+
+            スクリプトファイルの構造は以下の通り
+
+            -----スクリプトファイル(scriptName)--------------------------
+            |                                                           |
+            |    ----セクション(sectionName)----------------------      |
+            |    |                                               |      |
+            |    |    ----チャプター(chapterName)------------    |      |
+            |    |    |                                     |    |      |
+            |    |    |                                     |    |      |
+            |    |    ---------------------------------------    |      |
+            |    |                                               |      |
+            |    |    ----チャプター(chapterName)------------    |      |
+            |    |    |                                     |    |      |
+            |    |    |                                     |    |      |
+            |    |    ---------------------------------------    |      |
+            |    |                                               |      |
+            |    |                       :                       |      |
+            |    |                                               |      |
+            |    -------------------------------------------------      |
+            |                                                           |
+            |    ----セクション(sectionName)----------------------      |
+            |    |                                               |      |
+            |    |    ----チャプター(chapterName)------------    |      |
+            |    |    |                                     |    |      |
+            |                                                           |
+            |                            :                              |
+            |                            :                              |
+            |                            :                              |
+            |                                                           |
+            -------------------------------------------------------------
+            *1 chapterName = sectionName + chapterNumber とし，chapterNumberは001から始まり，自動的にインクリメントされる
+            *2 chapterNumberはセクションが変わるごとに初期化される(junp機能を実装する際に気をつける)
+            '''
             self.dictScript = json.load(jsonScript)
+
         self.scriptName = scriptName
-        self.chapterName = chapterName
-        self.scriptLineNumber = scriptStartLineNumber
-        self.chapterNumber = self.chapterName + str(scriptStartLineNumber).zfill(3)
-        self.chapter = self.dictScript[self.chapterNumber]
-        self.Charactors = Charactors(self.dictScript[self.chapterNumber]['charactor'])
+        self.sectionName = sectionName
+        self.chapterNumber = scriptStartChapterNumber
+        self.chapterName = self.sectionName + str(self.chapterNumber).zfill(3)
+        self.dictChapter = self.dictScript[self.sectionName][self.chapterName]
+        self.Charactors = Charactors(self.dictChapter['charactor'])
+        self.MessageWindow = MessageWindow(self.dictChapter['message_window'])
         self.nextChapterFrag = True
-        self.MessageWindow = MessageWindow(self.dictScript[self.chapterNumber]['message_window'])
         self.callChapterOnceFlag = True
 
-    def callChapterOnce(self):
+    def callChapterOnce(self) -> None:
+        '''
+        チャプターで一度だけ実行すれば良い処理をこの関数で行う
+        チャプターで呼ばれたかどうかの判定はcallChapterOnceFlagで管理する
+        '''
         self.callChapterOnceFlag = False
-        if "background_img" in self.chapter:
-            self.background_img = pygame.image.load(self.chapter["background_img"])
-        if "BGM" in self.chapter:
-            self.BGM = pygame.mixer.music.load(self.chapter["BGM"])
+        if "background_img" in self.dictChapter:
+            self.background_img = pygame.image.load(self.dictChapter["background_img"])
+        if "BGM" in self.dictChapter:
+            self.BGM = pygame.mixer.music.load(self.dictChapter["BGM"])
 
     def setChapter(self):
-        self.scriptLineNumber += 1
-        self.chapterNumber = self.chapterName + str(self.scriptLineNumber).zfill(3)
-        self.Charactors.setChapter(self.dictScript[self.chapterNumber]['charactor'])
-        self.MessageWindow.setChapter(self.dictScript[self.chapterNumber]['message_window'])
+        self.chapterNumber += 1
+        self.chapterName = self.sectionName + str(self.chapterNumber).zfill(3)
+        self.dictChapter = self.dictScript[self.sectionName][self.chapterName]
+        self.Charactors.setChapter(self.dictChapter['charactor'])
+        self.MessageWindow.setChapter(self.dictChapter['message_window'])
         self.nextChapterFrag = False
-        self.chapter = self.dictScript[self.chapterNumber]
         self.callChapterOnceFlag = True
 
     def update(self):
@@ -52,28 +130,28 @@ class Game(IScene):
         self.MessageWindow.draw(self.screen)
 
     def eventProcess(self):
+        # マウスポインタが画面下部に移動したらメニューを表示
         if 290 <= pygame.mouse.get_pos()[0] <= 990 and 690 <= pygame.mouse.get_pos()[1] <= 720:
             Game.cheangeScene('GameUnderMenu')
+
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.locals.QUIT:
+                # 終了処理
                 pygame.quit()
                 sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_RETURN:
+            if event.type == pygame.locals.KEYDOWN:
+                if event.key == pygame.locals.K_RETURN:
+                    # Enterキーが押された時
                     if self.nextChapterFrag:
                         self.setChapter()
-            if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == pygame.locals.MOUSEBUTTONDOWN and event.button == 1:
+                # マウスがクリックされた時
                 if self.nextChapterFrag:
-                    self.scriptLineNumber += 1
-                    self.chapterNumber = self.chapterName + str(self.scriptLineNumber).zfill(3)
-                    self.Charactors.setChapter(self.dictScript[self.chapterNumber]['charactor'])
-                    self.MessageWindow.setChapter(self.dictScript[self.chapterNumber]['message_window'])
-                    self.nextChapterFrag = False
-            if event.type == KEYUP:
+                    self.setChapter()
+            if event.type == pygame.locals.KEYUP:
                 self.nextChapterFrag = True
-            if event.type == MOUSEBUTTONUP:
+            if event.type == pygame.locals.MOUSEBUTTONUP:
                 self.nextChapterFrag = True
-
 
     @classmethod
     def eventCheck(cls):

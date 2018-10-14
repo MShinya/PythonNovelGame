@@ -1,7 +1,9 @@
 import pygame
+import SceneManager
 from pygame.locals import *
 from IScene import *
 import GameSettings
+import Game
 
 class Menu(IScene):
     '''
@@ -51,7 +53,9 @@ class Menu(IScene):
                 self.mouseOverFlag = True
                 pygame.event.get()
                 if pygame.mouse.get_pressed()[0]:
-                        Menu.cheangeScene(self.scene)
+                    if self.scene == 'Game':
+                        SceneManager.addScene('Game', Game.Game())
+                    Menu.cheangeScene(self.scene)
             else:
                 self.mouseOverFlag = False
 
@@ -81,6 +85,7 @@ class Menu(IScene):
         self.drawTitle()
         for M in self.MenuList:
             M.draw()
+
     def eventProcess(self):
         for M in self.MenuList:
             M.eventProcess()
