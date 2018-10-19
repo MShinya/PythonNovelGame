@@ -1,5 +1,5 @@
 import IScene
-from Game import Game
+# from Game import Game
 import SceneManager
 
 
@@ -11,5 +11,6 @@ class Save(IScene.IScene):
         pass
 
     def update(self):
-        Game.Save()
+        # Game.Save()
+        SceneManager.SceneList['Game'].Save()
         SceneManager.setScene('Game')

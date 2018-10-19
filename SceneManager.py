@@ -1,13 +1,15 @@
 import Menu
-import Game
+# import Game
 import Exit
 import Save
 import GameUnderMenu
 
-#SceneList から 'Game': Game.Game() を削除してある
+# SceneList から 'Game': Game.Game() を削除してある
+# 後からMenuクラスによって追加される．
 SceneList = {'Menu': Menu.Menu(), 'GameUnderMenu': GameUnderMenu.GameUnderMenu(), 'Exit': Exit.Exit(), 'Save': Save.Save()}
 BeforeScene = SceneList['Menu']
-CurrentScene = SceneList['Menu']   
+CurrentScene = SceneList['Menu']
+
 
 def getScene():
     '''
@@ -15,11 +17,13 @@ def getScene():
     '''
     return CurrentScene
 
+
 def getBeforeScene():
     '''
     一つ前のシーンのインスタンスを返します。
     '''
     return BeforeScene
+
 
 def setScene(scene):
     '''
@@ -30,6 +34,7 @@ def setScene(scene):
     global SceneList
     BeforeScene = CurrentScene
     CurrentScene = SceneList[scene]
+
 
 def addScene(newSceneName, newSceneObject):
     '''

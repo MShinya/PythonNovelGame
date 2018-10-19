@@ -1,30 +1,45 @@
 import pygame
 import SceneManager
-from pygame.locals import *
-from IScene import *
+import IScene
 import GameSettings
 import Game
 
-class Menu(IScene):
+
+class Menu(IScene.IScene):
     '''
     メニュー画面を担当するクラス
     メニュー画面にはタイトルとメニューが含まれる
+
+    Inner Class
+    -----------
+    Menus : メニュー画面のメニュー項目に関する処理を担当するクラス
+
+    Menber Functions
+    ----------------
+    __init__ : Menuクラスのコンストラクタ．背景画像の読み込みとMenusクラスのインスタンスを生成する．
+
+    drawTitle : タイトルの描画を担当．
+
+    draw : メニューとタイトルを実際に描画．
+
+    eventProcess : イベント処理．
     '''
 
-    #メニューのリスト
+    # メニューのリスト
+    # 中身はStringのタプルで，('実際に表示するテキスト' : 'クリックした時に遷移するシーン名')
     MenuText = [
-            ('はじめから', 'Game'),
-            ('つづきから', 'Game'),
-            ('せってい', 'Game'),
-            ('クレジット', 'Game'),
-            ('やめる', 'Exit')
-            ]
+        ('はじめから', 'Game'),
+        ('つづきから', 'Game'),
+        ('せってい', 'Game'),
+        ('クレジット', 'Game'),
+        ('やめる', 'Exit')
+    ]
 
     class Menus():
         '''
         メニュー画面のメニューを担当するクラス
         '''
-        def __init__(self, text, x, y, scene):
+        def __init__(self, text: str, x: int, y: int, scene: str) -> None:
             '''
             Parameter
             ---------
@@ -45,7 +60,7 @@ class Menu(IScene):
             self.pos = (x, y)
             self.scene = scene
 
-        def eventProcess(self):
+        def eventProcess(self) -> None:
             '''
             メニューがマウスオーバーされた時の動作
             '''
@@ -59,33 +74,35 @@ class Menu(IScene):
             else:
                 self.mouseOverFlag = False
 
-        def draw(self):
+        def draw(self) -> None:
+            '''
+            メニューの描画
+            '''
             if self.mouseOverFlag:
                 Menu.screen.blit(self.mouseOverTextSurf, self.pos)
             else:
                 Menu.screen.blit(self.textSurf, self.pos)
 
-
-    def __init__(self):
+    def __init__(self) -> None:
         self.DrawList.append(pygame.image.load('images/background/sougen.jpg'))
         self.MenuList = []
         for i in range(len(self.MenuText)):
             self.MenuList.append(self.Menus(self.MenuText[i][0], 100, 300 + 80 * i, self.MenuText[i][1]))
 
-    def drawTitle(self):
+    def drawTitle(self) -> None:
         '''
         ゲームのタイトルを作成、描画する関数
         '''
         title = GameSettings.TitleFont.render('ノベルゲームだよ', True, (0, 0, 0))
         self.screen.blit(title, (GameSettings.WindowSize[0] // 2 - title.get_width() // 2, 50))
 
-    def draw(self):
+    def draw(self) -> None:
         for img in self.DrawList:
             self.screen.blit(img, (0, 0))
         self.drawTitle()
         for M in self.MenuList:
             M.draw()
 
-    def eventProcess(self):
+    def eventProcess(self) -> None:
         for M in self.MenuList:
             M.eventProcess()
