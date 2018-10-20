@@ -6,6 +6,8 @@ class MessageWindow():
     def __init__(self, message_window):
         self.dictMessageWindow =  message_window
         self.flameNumber = 0
+        self.callOnce()
+        self.callChapterOnce()
         self.callOnceFlag = True
         self.callChapterOnceFlag = True
 

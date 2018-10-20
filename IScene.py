@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import SceneManager
 
+
 class IScene():
     '''
     すべてのシーンクラスの基底クラス

@@ -1,6 +1,18 @@
-import pygame
+# import pygame
+import SceneManager
+import IScene
+import json
+import Game
 
-for event in pygame.event.get():
-    if event.type == pygame.locals.MOUSEBUTTONDOWN and event.button == 1:
+
+class Load(IScene.IScene):
+    def __init__(self) -> None:
         pass
-        # with open('')
+
+    def Load(self) -> None:
+        with open('savedata/save.json', 'r') as savefile:
+            dictSavefile = json.load(savefile)
+            SceneManager.SceneList['Game'] = Game.Game(saveData=dictSavefile)
+
+    def update(self):
+        SceneManager.setScene('Game')

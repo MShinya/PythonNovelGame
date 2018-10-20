@@ -3,10 +3,11 @@ import Menu
 import Exit
 import Save
 import GameUnderMenu
+import Load
 
 # SceneList から 'Game': Game.Game() を削除してある
 # 後からMenuクラスによって追加される．
-SceneList = {'Menu': Menu.Menu(), 'GameUnderMenu': GameUnderMenu.GameUnderMenu(), 'Exit': Exit.Exit(), 'Save': Save.Save()}
+SceneList = {'Menu': Menu.Menu(), 'GameUnderMenu': GameUnderMenu.GameUnderMenu(), 'Exit': Exit.Exit(), 'Save': Save.Save(), 'Load': Load.Load()}
 BeforeScene = SceneList['Menu']
 CurrentScene = SceneList['Menu']
 

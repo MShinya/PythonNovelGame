@@ -3,6 +3,7 @@ import SceneManager
 import IScene
 import GameSettings
 import Game
+import Load
 
 
 class Menu(IScene.IScene):
@@ -29,7 +30,7 @@ class Menu(IScene.IScene):
     # 中身はStringのタプルで，('実際に表示するテキスト' : 'クリックした時に遷移するシーン名')
     MenuText = [
         ('はじめから', 'Game'),
-        ('つづきから', 'Game'),
+        ('つづきから', 'Load'),
         ('せってい', 'Game'),
         ('クレジット', 'Game'),
         ('やめる', 'Exit')
@@ -70,6 +71,8 @@ class Menu(IScene.IScene):
                 if pygame.mouse.get_pressed()[0]:
                     if self.scene == 'Game':
                         SceneManager.addScene('Game', Game.Game())
+                    if self.scene == 'Load':
+                        SceneManager.SceneList['Load'].Load()
                     Menu.cheangeScene(self.scene)
             else:
                 self.mouseOverFlag = False

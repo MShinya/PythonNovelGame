@@ -31,7 +31,7 @@ class Game(IScene.IScene):
 
     eventProcess : 毎フレーム呼ばれ，キー入力やマウス入力に応じた処理を行う．
     '''
-    def __init__(self, scriptName: str = 'Script1.json', scriptStartChapterNumber: int = 1, sectionName: str = 'introduction', loadFlag: bool = False) -> None:
+    def __init__(self, scriptName: str = 'Script1.json', scriptStartChapterNumber: int = 1, sectionName: str = 'introduction', loadFlag: bool = False, saveData: dict = None) -> None:
         '''
         ゲームの初期化を行う関数．
         ゲームが最初から始められた時は，デフォルト引数に基づいて初期化する．
@@ -47,63 +47,96 @@ class Game(IScene.IScene):
 
         chapterName : String, default = ''
             チャプターの名前．
+
+        saveData : dict, default = None
+            セーブデータ．
         '''
-        with open('scripts/' + scriptName, 'r') as jsonScript:
-            self.dictScript = json.load(jsonScript)
-            '''
-            スクリプトファイルを読み込み，ディクショナリーとして保存する．
-            現在は一つのスクリプトファイルにしか対応していないが，複数のスクリプトファイルに対応する必要がある(18/10/14)
+        if saveData:
+            self.scriptName = saveData['scriptName']
+            self.sectionName = saveData['sectionName']
+            self.chapterNumber = saveData['chapterNumber']
+            self.chapterName = saveData['chapterName']
 
-            スクリプトファイルの構造は以下の通り
+            with open('scripts/' + self.scriptName, 'r') as jsonScript:
+                self.dictScript = json.load(jsonScript)
+                self.dictChapter = self.dictScript[self.sectionName][self.chapterName]
 
-            -----スクリプトファイル(scriptName)--------------------------
-            |                                                           |
-            |    ----セクション(sectionName)----------------------      |
-            |    |                                               |      |
-            |    |    ----チャプター(chapterName)------------    |      |
-            |    |    |                                     |    |      |
-            |    |    |                                     |    |      |
-            |    |    ---------------------------------------    |      |
-            |    |                                               |      |
-            |    |    ----チャプター(chapterName)------------    |      |
-            |    |    |                                     |    |      |
-            |    |    |                                     |    |      |
-            |    |    ---------------------------------------    |      |
-            |    |                                               |      |
-            |    |                       :                       |      |
-            |    |                                               |      |
-            |    -------------------------------------------------      |
-            |                                                           |
-            |    ----セクション(sectionName)----------------------      |
-            |    |                                               |      |
-            |    |    ----チャプター(chapterName)------------    |      |
-            |    |    |                                     |    |      |
-            |                                                           |
-            |                            :                              |
-            |                            :                              |
-            |                            :                              |
-            |                                                           |
-            -------------------------------------------------------------
-            *1 chapterName = sectionName + chapterNumber とし，chapterNumberは001から始まり，自動的にインクリメントされる
-            *2 chapterNumberはセクションが変わるごとに初期化される(junp機能を実装する際に気をつける)
-            '''
+            self.Charactors = Charactors(saveData['Charactors'])
+            self.MessageWindow = MessageWindow(saveData['MessageWindow'])
+            self.nextChapterFrag = True
+            self.callChapterOnceFlag = True
+            try:
+                self.background_img = pygame.image.load(saveData["background_img"])
+            except KeyError:
+                pass
+            try:
+                self.BGM = pygame.mixer.music.load(saveData["BGM"])
+            except KeyError:
+                pass
+            self.saveDataDict = {'scriptName': self.scriptName,
+                                 'sectionName': self.sectionName,
+                                 'chapterNumber': self.chapterNumber,
+                                 'chapterName': self.chapterName,
+                                 'Charactors': self.dictChapter['charactor'],
+                                 'MessageWindow': self.dictChapter['message_window'],
+                                 }
+        else:
+            with open('scripts/' + scriptName, 'r') as jsonScript:
+                self.dictScript = json.load(jsonScript)
+                '''
+                スクリプトファイルを読み込み，ディクショナリーとして保存する．
+                現在は一つのスクリプトファイルにしか対応していないが，複数のスクリプトファイルに対応する必要がある(18/10/14)
 
-        self.scriptName = scriptName
-        self.sectionName = sectionName
-        self.chapterNumber = scriptStartChapterNumber
-        self.chapterName = self.sectionName + str(self.chapterNumber).zfill(3)
-        self.dictChapter = self.dictScript[self.sectionName][self.chapterName]
-        self.Charactors = Charactors(self.dictChapter['charactor'])
-        self.MessageWindow = MessageWindow(self.dictChapter['message_window'])
-        self.saveDataDict = {'scriptName': self.scriptName,
-                             'sectionName': self.sectionName,
-                             'chapterNumber': self.chapterNumber,
-                             'chapterName': self.chapterName,
-                             'Charactors': self.Charactors,
-                             'MessageWindow': self.MessageWindow,
-                             }
-        self.nextChapterFrag = True
-        self.callChapterOnceFlag = True
+                スクリプトファイルの構造は以下の通り
+
+                -----スクリプトファイル(scriptName)--------------------------
+                |                                                           |
+                |    ----セクション(sectionName)----------------------      |
+                |    |                                               |      |
+                |    |    ----チャプター(chapterName)------------    |      |
+                |    |    |                                     |    |      |
+                |    |    |                                     |    |      |
+                |    |    ---------------------------------------    |      |
+                |    |                                               |      |
+                |    |    ----チャプター(chapterName)------------    |      |
+                |    |    |                                     |    |      |
+                |    |    |                                     |    |      |
+                |    |    ---------------------------------------    |      |
+                |    |                                               |      |
+                |    |                       :                       |      |
+                |    |                                               |      |
+                |    -------------------------------------------------      |
+                |                                                           |
+                |    ----セクション(sectionName)----------------------      |
+                |    |                                               |      |
+                |    |    ----チャプター(chapterName)------------    |      |
+                |    |    |                                     |    |      |
+                |                                                           |
+                |                            :                              |
+                |                            :                              |
+                |                            :                              |
+                |                                                           |
+                -------------------------------------------------------------
+                *1 chapterName = sectionName + chapterNumber とし，chapterNumberは001から始まり，自動的にインクリメントされる
+                *2 chapterNumberはセクションが変わるごとに初期化される(junp機能を実装する際に気をつける)
+                '''
+
+            self.scriptName = scriptName
+            self.sectionName = sectionName
+            self.chapterNumber = scriptStartChapterNumber
+            self.chapterName = self.sectionName + str(self.chapterNumber).zfill(3)
+            self.dictChapter = self.dictScript[self.sectionName][self.chapterName]
+            self.Charactors = Charactors(self.dictChapter['charactor'])
+            self.MessageWindow = MessageWindow(self.dictChapter['message_window'])
+            self.saveDataDict = {'scriptName': self.scriptName,
+                                 'sectionName': self.sectionName,
+                                 'chapterNumber': self.chapterNumber,
+                                 'chapterName': self.chapterName,
+                                 'Charactors': self.dictChapter['charactor'],
+                                 'MessageWindow': self.dictChapter['message_window'],
+                                 }
+            self.nextChapterFrag = True
+            self.callChapterOnceFlag = True
 
     def callChapterOnce(self) -> None:
         '''
@@ -128,8 +161,8 @@ class Game(IScene.IScene):
                              'sectionName': self.sectionName,
                              'chapterNumber': self.chapterNumber,
                              'chapterName': self.chapterName,
-                             'Charactors': self.Charactors,
-                             'MessageWindow': self.MessageWindow,
+                             'Charactors': self.dictChapter['charactor'],
+                             'MessageWindow': self.dictChapter['message_window'],
                              }
         self.nextChapterFrag = False
         self.callChapterOnceFlag = True
